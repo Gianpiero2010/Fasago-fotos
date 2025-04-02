@@ -1,3 +1,4 @@
+// Cargar fotos al iniciar
 document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("uploadForm")) {
         document.getElementById("uploadForm").addEventListener("submit", savePhoto);
@@ -35,6 +36,7 @@ function savePhoto(event) {
         captionInput.value = "";
 
         alert("Foto subida con éxito.");
+        loadPhotos(); // Recargar la galería
     };
 
     reader.readAsDataURL(fileInput.files[0]);

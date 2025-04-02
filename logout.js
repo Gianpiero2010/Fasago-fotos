@@ -1,11 +1,9 @@
 // logout.js
 
 function logout() {
-    // Eliminar cualquier dato de sesión que hayas guardado
-    localStorage.removeItem("userData");  // Si has guardado datos del usuario en localStorage
-    sessionStorage.clear();  // Limpiar sessionStorage si se usa
+    // Elimina los datos de la sesión, si se está utilizando algo como localStorage o sessionStorage
+    localStorage.removeItem("userLoggedIn"); // Asegúrate de que esta clave se use en tu sistema de inicio de sesión
 
-    // Redirigir al usuario a la página principal (o a la página de login)
-    alert("Has cerrado sesión.");
-    window.location.href = "login.html";  // Puedes cambiar esta ruta si deseas redirigir a otra página
+    // Redirige a la página de login
+    window.location.href = "login.html";
 }

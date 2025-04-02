@@ -1,9 +1,8 @@
-// logout.js
-
+// Función para cerrar sesión
 function logout() {
-    // Elimina los datos de la sesión, si se está utilizando algo como localStorage o sessionStorage
-    localStorage.removeItem("userLoggedIn"); // Asegúrate de que esta clave se use en tu sistema de inicio de sesión
+    // Eliminar la clave "authenticated" del localStorage
+    localStorage.removeItem("authenticated");
 
-    // Redirige a la página de login
+    // Redirigir al login
     window.location.href = "login.html";
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Foto - Fasago Fotos</title>
+    <title>Subir Foto</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,25 +16,20 @@
                 <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
-        <button onclick="logout()">Cerrar Sesión</button> <!-- Botón de Cerrar sesión -->
+        <button onclick="logout()">Cerrar Sesión</button>
     </header>
 
     <section id="upload">
-        <h1>Subir Foto</h1>
+        <h2>Subir Foto</h2>
         <form id="uploadForm">
             <input type="file" id="fileInput" accept="image/*" required>
-            <input type="text" id="captionInput" placeholder="Añadir una descripción" required>
+            <input type="text" id="captionInput" placeholder="Descripción de la foto" required>
             <button type="submit">Subir Foto</button>
         </form>
     </section>
 
-    <section id="feed">
-        <h2>Galería</h2>
-        <div id="feedContent"></div>
-    </section>
-
-    <script src="upload.js"></script>
-    <script src="logout.js"></script> <!-- Script para manejar el cierre de sesión -->
+    <script src="script.js"></script>
+    <script src="logout.js"></script>
 
 </body>
 </html>

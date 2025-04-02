@@ -1,18 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
-    if (localStorage.getItem("authenticated") === "true") {
-        window.location.href = "home.html";
+// login.js
+
+document.getElementById("login").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Aquí puedes agregar la validación con tus credenciales
+
+    if (username === "usuario" && password === "contraseña") { // Ejemplo básico
+        localStorage.setItem("userLoggedIn", true); // Guardar que el usuario ha iniciado sesión
+        window.location.href = "home.html"; // Redirigir al home después de login exitoso
+    } else {
+        alert("Credenciales incorrectas. Intenta nuevamente.");
     }
 });
-
-function checkPassword() {
-    const passwordInput = document.getElementById("passwordInput").value;
-    const errorMsg = document.getElementById("errorMsg");
-
-    if (passwordInput === "fasago") { // Contraseña fija
-        localStorage.setItem("authenticated", "true");
-        window.location.href = "home.html"; // Redirige al home si la contraseña es correcta
-    } else {
-        errorMsg.textContent = "Contraseña incorrecta. Intenta de nuevo.";
-        errorMsg.style.color = "red";
-    }
-}

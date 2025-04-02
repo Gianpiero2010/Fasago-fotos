@@ -3,29 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Foto</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Subir Foto - Fasago Fotos</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <header>
         <nav>
             <ul>
                 <li><a href="home.html">Inicio</a></li>
                 <li><a href="gallery.html">Galería</a></li>
+                <li><a href="logout.html" id="logoutBtn">Cerrar sesión</a></li>
             </ul>
         </nav>
     </header>
-
-    <section id="upload">
-        <h2>Subir Foto</h2>
+    
+    <section>
+        <h1>Subir Foto</h1>
         <form id="uploadForm">
             <input type="file" id="fileInput" accept="image/*" required>
-            <input type="text" id="captionInput" placeholder="Descripción de la foto" required>
-            <button type="button" onclick="savePhoto()">Subir Foto</button>
+            <input type="text" id="captionInput" placeholder="Añadir una descripción" required>
+            <button type="submit">Subir Foto</button>
         </form>
     </section>
 
-    <script src="script.js"></script> <!-- El script para manejar la subida de fotos -->
+    <section id="feed">
+        <h2>Galería</h2>
+        <div id="feedContent"></div>
+    </section>
+
+    <script src="upload.js"></script>
 </body>
 </html>

@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <nav>
             <ul>
                 <li><a href="home.html">Inicio</a></li>
                 <li><a href="gallery.html">Galería</a></li>
-                <li><a href="javascript:void(0);" onclick="logout()">Cerrar sesión</a></li>
+                <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
+        <button onclick="logout()">Cerrar Sesión</button> <!-- Botón de Cerrar sesión -->
     </header>
-    
-    <section>
+
+    <section id="upload">
         <h1>Subir Foto</h1>
         <form id="uploadForm">
             <input type="file" id="fileInput" accept="image/*" required>
@@ -32,6 +34,7 @@
     </section>
 
     <script src="upload.js"></script>
-    <script src="logout.js"></script> <!-- Script para cerrar sesión -->
+    <script src="logout.js"></script> <!-- Script para manejar el cierre de sesión -->
+
 </body>
 </html>

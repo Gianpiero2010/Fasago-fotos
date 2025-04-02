@@ -65,6 +65,13 @@ function loadPhotos() {
             saveToLocalStorage(photo); // Guardar la foto al hacer clic
         };
 
+        // Botón de descargar
+        const downloadBtn = document.createElement("a");
+        downloadBtn.href = photo.image;
+        downloadBtn.download = "foto_descargada.png";
+        downloadBtn.textContent = "📥 Descargar";
+        downloadBtn.className = "download-btn";
+
         // Botón de eliminar
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "❌ Eliminar";
@@ -75,6 +82,7 @@ function loadPhotos() {
         post.appendChild(img);
         post.appendChild(caption);
         post.appendChild(saveBtn);
+        post.appendChild(downloadBtn);
         post.appendChild(deleteBtn);
         feed.appendChild(post);
     });

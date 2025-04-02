@@ -13,10 +13,8 @@
             <ul>
                 <li><a href="home.html">Inicio</a></li>
                 <li><a href="gallery.html">Galería</a></li>
-                <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
-        <button onclick="logout()">Cerrar Sesión</button>
     </header>
 
     <section id="upload">
@@ -24,12 +22,10 @@
         <form id="uploadForm">
             <input type="file" id="fileInput" accept="image/*" required>
             <input type="text" id="captionInput" placeholder="Descripción de la foto" required>
-            <button type="submit">Subir Foto</button>
+            <button type="button" onclick="savePhoto()">Subir Foto</button>
         </form>
     </section>
 
-    <script src="script.js"></script>
-    <script src="logout.js"></script>
-
+    <script src="script.js"></script> <!-- El script para manejar la subida de fotos -->
 </body>
 </html>

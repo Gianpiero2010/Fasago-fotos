@@ -3,29 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Fasago Fotos - Galería</title>
+    
 </head>
 <body>
+    <h1>Bienvenido a la página de Fasago Fotos</h1>
+    <h2>Galería de Fotos</h2>
 
-    <header>
-        <nav>
-            <ul>
-                <li><a href="home.html">Inicio</a></li>
-                <li><a href="gallery.html">Galería</a></li>
-                <li><a href="upload.html">Subir Foto</a></li>
-            </ul>
-        </nav>
-        <button onclick="logout()">Cerrar Sesión</button>
-    </header>
+    <!-- Formulario para subir fotos -->
+    <form id="uploadForm">
+        <input type="file" id="fileInput" accept="image/*" required>
+        <input type="text" id="captionInput" placeholder="Escribe un pie de foto" required>
+        <button type="submit">Subir Foto</button>
+    </form>
 
-    <section id="home">
-        <h2>Bienvenido a nuestra galería familiar</h2>
-        <p>Comparte y guarda fotos familiares.</p>
-    </section>
+    <!-- Galería de fotos -->
+    <div id="feed"></div>
 
-    <script src="script.js"></script>
-    <script src="logout.js"></script> <!-- Script de cerrar sesión -->
-
+    <script src="app.js"></script>
 </body>
 </html>
+

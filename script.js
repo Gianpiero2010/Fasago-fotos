@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Función para guardar la foto
 function savePhoto(event) {
-    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+    event.preventDefault();
 
     const fileInput = document.getElementById("fileInput");
     const captionInput = document.getElementById("captionInput");
@@ -43,8 +43,8 @@ function savePhoto(event) {
 
 // Función para cargar fotos en la galería
 function loadPhotos() {
-    const feed = document.getElementById("feed");
-    feed.innerHTML = ""; // Limpiar galería antes de cargar las nuevas fotos
+    const feed = document.getElementById("feedContent");
+    feed.innerHTML = "";
 
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
 
@@ -58,37 +58,29 @@ function loadPhotos() {
         const caption = document.createElement("p");
         caption.textContent = photo.caption;
 
-        // Botón de guardar foto
+        // Botón de guardar
         const saveBtn = document.createElement("button");
         saveBtn.textContent = "💾 Guardar Foto";
         saveBtn.onclick = function () {
             saveToLocalStorage(photo); // Guardar la foto al hacer clic
         };
 
-        // Botón de eliminar foto
+        // Botón de eliminar
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "❌ Eliminar";
         deleteBtn.onclick = function () {
             deletePhoto(photo.id); // Eliminar la foto al hacer clic
         };
 
-        // Botón de descargar foto
-        const downloadBtn = document.createElement("button");
-        downloadBtn.textContent = "⬇️ Descargar Foto";
-        downloadBtn.onclick = function () {
-            downloadPhoto(photo); // Descargar la foto al hacer clic
-        };
-
         post.appendChild(img);
         post.appendChild(caption);
         post.appendChild(saveBtn);
-        post.appendChild(downloadBtn);
         post.appendChild(deleteBtn);
         feed.appendChild(post);
     });
 }
 
-// Función para guardar la foto en una sección separada en localStorage
+// Función para guardar la foto en localStorage
 function saveToLocalStorage(photo) {
     let savedPhotos = JSON.parse(localStorage.getItem("savedPhotos")) || [];
     savedPhotos.push(photo);
@@ -107,13 +99,4 @@ function deletePhoto(photoId) {
     loadPhotos();
 
     alert("Foto eliminada.");
-}
-
-// Función para descargar foto
-function downloadPhoto(photo) {
-    const link = document.createElement("a");
-    link.href = photo.image; // Fuente de la imagen
-    link.download = "foto-" + photo.id + ".png"; // Nombre de la imagen descargada
-    link.click();
-    alert("Descargando foto...");
 }

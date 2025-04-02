@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a Fasago Fotos</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <nav>
             <ul>
                 <li><a href="home.html">Inicio</a></li>
-                <li><a href="upload.html">Subir Foto</a></li>
                 <li><a href="gallery.html">Galería</a></li>
-                <li><a href="logout.html" id="logoutBtn">Cerrar sesión</a></li>
+                <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
+        <button onclick="logout()">Cerrar Sesión</button>
     </header>
-    
-    <section>
-        <h1>Bienvenido a la página de Fasago Fotos</h1>
-        <p>Tu espacio para guardar, ver y compartir fotos.</p>
-        <p><strong>Galería de Fotos</strong></p>
-        <p>Aquí puedes ver todas tus fotos guardadas.</p>
-        <button onclick="window.location.href='gallery.html'">Ver Galería</button>
+
+    <section id="home">
+        <h2>Bienvenido a nuestra galería familiar</h2>
+        <p>Comparte y guarda fotos familiares.</p>
     </section>
+
+    <script src="script.js"></script>
+    <script src="logout.js"></script> <!-- Script de cerrar sesión -->
+
 </body>
 </html>

@@ -7,5 +7,5 @@ function logout() {
 
     // Redirigir al usuario a la página principal (o a la página de login)
     alert("Has cerrado sesión.");
-    window.location.href = "home.html";  // Puedes cambiar esta ruta si deseas redirigir a otra página
+    window.location.href = "login.html";  // Puedes cambiar esta ruta si deseas redirigir a otra página
 }

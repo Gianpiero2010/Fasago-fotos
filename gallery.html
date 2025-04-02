@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería - Fasago Fotos</title>
+    <title>Galería de Fotos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,16 +16,19 @@
                 <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
-        <button onclick="logout()">Cerrar Sesión</button> <!-- Botón de Cerrar sesión -->
+        <!-- Botón de cerrar sesión -->
+        <button onclick="logout()">Cerrar Sesión</button>
     </header>
 
     <section id="gallery">
-        <h1>Galería de Fotos</h1>
-        <div id="feed"></div> <!-- Aquí se cargarán las fotos -->
+        <h2>Galería de Fotos</h2>
+        <div id="feed" class="feed">
+            <!-- Las fotos se cargarán aquí -->
+        </div>
     </section>
 
-    <script src="gallery.js"></script>
-    <script src="logout.js"></script> <!-- Script de cierre de sesión -->
+    <script src="script.js"></script> <!-- El script para manejar la galería -->
+    <script src="logout.js"></script> <!-- El script para manejar el cierre de sesión -->
 
 </body>
 </html>

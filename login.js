@@ -9,7 +9,7 @@ function checkPassword() {
     const passwordInput = document.getElementById("passwordInput").value;
     const errorMsg = document.getElementById("errorMsg");
 
-    if (passwordInput === "familia2025") {  // Cambia la contraseña aquí si lo necesitas
+    if (passwordInput === "fasago") {  // Cambié la contraseña a "fasago"
         localStorage.setItem("authenticated", "true");  // Guardar estado de autenticación
         window.location.href = "home.html";  // Redirigir al home
     } else {

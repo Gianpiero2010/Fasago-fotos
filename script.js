@@ -1,4 +1,3 @@
-// Cargar fotos al iniciar
 document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("uploadForm")) {
         document.getElementById("uploadForm").addEventListener("submit", savePhoto);
@@ -8,10 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Guardar foto en localStorage
-function savePhoto(event) {
-    event.preventDefault();
-
+// Función para guardar la foto
+function savePhoto() {
     const fileInput = document.getElementById("fileInput");
     const captionInput = document.getElementById("captionInput");
 
@@ -36,13 +33,13 @@ function savePhoto(event) {
         captionInput.value = "";
 
         alert("Foto subida con éxito.");
-        loadPhotos(); // Recargar la galería
+        loadPhotos(); // Cargar fotos después de guardar
     };
 
     reader.readAsDataURL(fileInput.files[0]);
 }
 
-// Cargar fotos en la galería
+// Función para cargar fotos en la galería
 function loadPhotos() {
     const feed = document.getElementById("feed");
     feed.innerHTML = "";
@@ -59,23 +56,24 @@ function loadPhotos() {
         const caption = document.createElement("p");
         caption.textContent = photo.caption;
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "❌ Eliminar";
-        deleteBtn.onclick = function () {
-            deletePhoto(photo.id);
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "💾 Guardar Foto";
+        saveBtn.onclick = function () {
+            saveToLocalStorage(photo); // Guardar la foto al hacer clic
         };
 
         post.appendChild(img);
         post.appendChild(caption);
-        post.appendChild(deleteBtn);
+        post.appendChild(saveBtn);
         feed.appendChild(post);
     });
 }
 
-// Eliminar foto
-function deletePhoto(photoId) {
-    let photos = JSON.parse(localStorage.getItem("photos")) || [];
-    photos = photos.filter(photo => photo.id !== photoId);
-    localStorage.setItem("photos", JSON.stringify(photos));
-    loadPhotos();
+// Función para guardar la foto en localStorage
+function saveToLocalStorage(photo) {
+    let savedPhotos = JSON.parse(localStorage.getItem("savedPhotos")) || [];
+    savedPhotos.push(photo);
+    localStorage.setItem("savedPhotos", JSON.stringify(savedPhotos));
+
+    alert("Foto guardada en tu galería.");
 }

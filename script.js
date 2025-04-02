@@ -56,15 +56,24 @@ function loadPhotos() {
         const caption = document.createElement("p");
         caption.textContent = photo.caption;
 
+        // Botón de guardar
         const saveBtn = document.createElement("button");
         saveBtn.textContent = "💾 Guardar Foto";
         saveBtn.onclick = function () {
             saveToLocalStorage(photo); // Guardar la foto al hacer clic
         };
 
+        // Botón de eliminar
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "❌ Eliminar";
+        deleteBtn.onclick = function () {
+            deletePhoto(photo.id); // Eliminar la foto al hacer clic
+        };
+
         post.appendChild(img);
         post.appendChild(caption);
         post.appendChild(saveBtn);
+        post.appendChild(deleteBtn);
         feed.appendChild(post);
     });
 }
@@ -76,4 +85,16 @@ function saveToLocalStorage(photo) {
     localStorage.setItem("savedPhotos", JSON.stringify(savedPhotos));
 
     alert("Foto guardada en tu galería.");
+}
+
+// Función para eliminar foto
+function deletePhoto(photoId) {
+    let photos = JSON.parse(localStorage.getItem("photos")) || [];
+    photos = photos.filter(photo => photo.id !== photoId);
+    localStorage.setItem("photos", JSON.stringify(photos));
+
+    // Cargar nuevamente las fotos después de eliminar una
+    loadPhotos();
+
+    alert("Foto eliminada.");
 }

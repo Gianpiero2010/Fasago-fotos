@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Función para guardar la foto
+// Guardar foto en localStorage
 function savePhoto(event) {
     event.preventDefault();
 
@@ -35,15 +35,15 @@ function savePhoto(event) {
         captionInput.value = "";
 
         alert("Foto subida con éxito.");
-        loadPhotos(); // Cargar fotos después de guardar
+        loadPhotos(); // Recargar la galería después de subir la foto
     };
 
     reader.readAsDataURL(fileInput.files[0]);
 }
 
-// Función para cargar fotos en la galería
+// Cargar fotos en la galería
 function loadPhotos() {
-    const feed = document.getElementById("feedContent");
+    const feed = document.getElementById("feed");
     feed.innerHTML = "";
 
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
@@ -58,53 +58,32 @@ function loadPhotos() {
         const caption = document.createElement("p");
         caption.textContent = photo.caption;
 
-        // Botón de guardar
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "💾 Guardar Foto";
-        saveBtn.onclick = function () {
-            saveToLocalStorage(photo); // Guardar la foto al hacer clic
-        };
-
-        // Botón de descargar
-        const downloadBtn = document.createElement("a");
-        downloadBtn.href = photo.image;
-        downloadBtn.download = "foto_descargada.png";
-        downloadBtn.textContent = "📥 Descargar";
-        downloadBtn.className = "download-btn";
-
         // Botón de eliminar
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "❌ Eliminar";
         deleteBtn.onclick = function () {
-            deletePhoto(photo.id); // Eliminar la foto al hacer clic
+            deletePhoto(photo.id);
         };
+
+        // Botón de descarga
+        const downloadBtn = document.createElement("a");
+        downloadBtn.textContent = "⬇️ Descargar";
+        downloadBtn.href = photo.image;
+        downloadBtn.download = `foto_${photo.id}.png`;
+        downloadBtn.className = "download-btn";
 
         post.appendChild(img);
         post.appendChild(caption);
-        post.appendChild(saveBtn);
-        post.appendChild(downloadBtn);
         post.appendChild(deleteBtn);
+        post.appendChild(downloadBtn);
         feed.appendChild(post);
     });
 }
 
-// Función para guardar la foto en localStorage
-function saveToLocalStorage(photo) {
-    let savedPhotos = JSON.parse(localStorage.getItem("savedPhotos")) || [];
-    savedPhotos.push(photo);
-    localStorage.setItem("savedPhotos", JSON.stringify(savedPhotos));
-
-    alert("Foto guardada en tu galería.");
-}
-
-// Función para eliminar foto
+// Eliminar foto
 function deletePhoto(photoId) {
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
     photos = photos.filter(photo => photo.id !== photoId);
     localStorage.setItem("photos", JSON.stringify(photos));
-
-    // Cargar nuevamente las fotos después de eliminar una
     loadPhotos();
-
-    alert("Foto eliminada.");
 }

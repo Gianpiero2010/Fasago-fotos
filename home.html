@@ -1,63 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Inicio | Mi Galería</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" media="(max-width: 768px)" href="mobile.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4361ee">
+  <meta charset="UTF-8">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header Responsive -->
-    <header class="main-header">
-        <button class="mobile-menu-btn" aria-label="Menú">☰</button>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">🏠 Inicio</a></li>
-                <li><a href="gallery.html">🖼️ Galería</a></li>
-                <li><a href="upload.html">📤 Subir</a></li>
-                <li><button id="logoutBtn" class="logout-btn">🚪 Salir</button></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <a href="home.html" class="active">Inicio</a>
+      <a href="gallery.html">Galería</a>
+      <a href="upload.html">Subir foto</a>
+      <button onclick="logout()">Cerrar sesión</button>
+    </nav>
+  </header>
 
-    <main class="home-container">
-        <!-- Sección Principal -->
-        <section class="hero">
-            <h1>Bienvenido a tu Galería</h1>
-            <p>Guarda y comparte tus mejores momentos</p>
-            <a href="upload.html" class="btn-primary">Subir primera foto</a>
-        </section>
+  <main class="home-main">
+    <h1>Últimas Actualizaciones</h1>
+    <div class="update-card">
+      <h3>Nueva función: Galería mejorada</h3>
+      <p>Ahora puedes ver tus fotos en un diseño de cuadrícula interactivo.</p>
+      <p class="update-date">Publicado: 03/04/2025</p>
+    </div>
+  </main>
 
-        <!-- Novedades -->
-        <section class="updates">
-            <h2>✨ Novedades</h2>
-            <div class="update-card">
-                <h3>Nueva Actualización v2.5</h3>
-                <ul>
-                    <li>📱 Soporte mejorado para móviles</li>
-                    <li>⚡ 30% más rápido</li>
-                    <li>🖼️ Nueva galería interactiva</li>
-                </ul>
-            </div>
-        </section>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="firebase.js"></script>
+  
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) window.location.href = 'login.html';
+    });
 
-        <!-- Fotos Recientes -->
-        <section class="recent-photos">
-            <h2>Tus Fotos Recientes</h2>
-            <div id="recentPhotos" class="photo-grid">
-                <!-- Dinámico desde JS -->
-                <div class="loading-spinner"></div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Scripts -->
-    <script src="js/firebase.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/mobile.js"></script>
-    <script src="js/home.js"></script>
+    function logout() {
+      firebase.auth().signOut();
+    }
+  </script>
 </body>
 </html>

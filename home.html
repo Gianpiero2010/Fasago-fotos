@@ -3,40 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Inicio | Galería de Fotos</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 </head>
 <body>
-
-    <header>
-        <nav>
+    <header class="main-header">
+        <nav aria-label="Navegación principal">
             <ul>
-                <li><a href="home.html">Inicio</a></li>
+                <li><a href="home.html" class="active">Inicio</a></li>
                 <li><a href="gallery.html">Galería</a></li>
                 <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
-        <button onclick="logout()">Cerrar Sesión</button>
+        <button id="logoutBtn" class="logout-btn">
+            <span class="icon">🚪</span> Cerrar Sesión
+        </button>
     </header>
 
-    <section id="home">
-        <h2>Bienvenido a nuestra galería familiar</h2>
-        <p>Comparte y guarda fotos familiares.</p>
-    </section>
+    <main class="home-container">
+        <section class="welcome-section">
+            <h1>Bienvenido a tu Galería</h1>
+            <p>Guarda y comparte tus mejores momentos</p>
+        </section>
 
-    <script src="script.js"></script>
-    <script src="logout.js"></script>
+        <section class="whats-new">
+            <h2>📢 ¿Qué hay de nuevo?</h2>
+            <div class="update-card">
+                <h3>Versión 2.1 - Actualización de Julio</h3>
+                <ul class="update-features">
+                    <li>✅ Nueva función de vista previa antes de subir fotos</li>
+                    <li>✅ Límite de tamaño aumentado a 5MB por imagen</li>
+                    <li>✅ Mejorado el sistema de notificaciones</li>
+                    <li>✅ Diseño más rápido y accesible</li>
+                </ul>
+                <div class="update-meta">
+                    <span class="update-date">Publicado: 15/07/2023</span>
+                    <button class="view-details-btn">Ver detalles completos</button>
+                </div>
+            </div>
+        </section>
 
-    <!-- Verificar autenticación y redirigir si no está autenticado -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!firebase.auth().currentUser) {
-                window.location.href = "login.html"; // Si el usuario no está autenticado, redirige a login
-            }
-        });
-    </script>
+        <section class="recent-photos">
+            <h2>Tus fotos recientes</h2>
+            <div id="recentPhotos" class="photo-grid">
+                <!-- Fotos se cargarán aquí -->
+                <div class="loading-spinner"></div>
+            </div>
+            <a href="gallery.html" class="view-all-btn">Ver todas las fotos</a>
+        </section>
+    </main>
 
+    <script src="firebase-config.js"></script>
+    <script src="home.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>

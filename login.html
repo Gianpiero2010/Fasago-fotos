@@ -3,61 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Carga de Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <title>Iniciar Sesión | Mi Galería</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" media="(max-width: 768px)" href="css/mobile.css">
 </head>
-<body>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <h1>🔐 Iniciar Sesión</h1>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Ingresar</button>
+                
+                <div class="login-options">
+                    <p>O inicia con:</p>
+                    <button type="button" id="googleLogin" class="btn-social">
+                        <img src="assets/google-icon.svg" alt="Google"> Google
+                    </button>
+                </div>
+                
+                <div id="loginStatus" class="status-message"></div>
+            </form>
+            
+            <p class="register-link">¿No tienes cuenta? <a href="#" id="registerBtn">Regístrate</a></p>
+        </div>
+    </div>
 
-    <section id="loginContainer">
-        <h2>Iniciar Sesión</h2>
-        
-        <!-- Formulario de inicio de sesión tradicional -->
-        <input type="email" id="emailInput" placeholder="Ingresa tu correo electrónico" required>
-        <input type="password" id="passwordInput" placeholder="Ingresa la contraseña" required>
-        <button onclick="checkPassword()">Entrar</button>
-        <p id="errorMsg"></p>
-
-        <p>O inicia sesión con:</p>
-        <!-- Botón de inicio de sesión con Google -->
-        <button id="googleSignInBtn">Iniciar sesión con Google</button>
-    </section>
-
-    <script src="login.js"></script>
-
-    <!-- Aquí va el script para inicializar Firebase -->
-    <script>
-        // Configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Inicializa Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Iniciar sesión con Google
-        document.getElementById('googleSignInBtn').addEventListener('click', function() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user;
-                    console.log('Usuario autenticado con Google:', user);
-                    window.location.href = "home.html"; // Redirige a home si la autenticación es exitosa
-                })
-                .catch((error) => {
-                    console.error('Error de autenticación con Google:', error);
-                    alert('Error de autenticación, intente nuevamente.');
-                });
-        });
-    </script>
-
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/mobile.js"></script>
 </body>
 </html>

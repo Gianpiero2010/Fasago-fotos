@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Fotos</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Carga de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 </head>
 <body>
 
@@ -16,32 +14,28 @@
         <nav>
             <ul>
                 <li><a href="home.html">Inicio</a></li>
-                <li><a href="gallery.html">Galeria</a></li>
-                <li><a href="upload.html">Subir foto</a></li>
+                <li><a href="gallery.html">Galería</a></li>
+                <li><a href="upload.html">Subir Foto</a></li>
             </ul>
         </nav>
-                <button onclick="logout()">Cerrar Sesión</button>
+        <button onclick="logout()">Cerrar Sesión</button>
     </header>
 
-    <section id="gallery">
-        <h2>Galería de Fotos</h2>
-        <div id="photoFeed" class="photo-feed">
-            <!-- Aquí se cargarán las fotos -->
-        </div>
+    <section id="home">
+        <h2>Bienvenido a nuestra galería familiar</h2>
+        <p>Comparte y guarda fotos familiares.</p>
     </section>
 
-    <script src="script.js"></script> <!-- El script para cargar las fotos -->
+    <script src="script.js"></script>
+    <script src="logout.js"></script>
 
-    <!-- Script de logout -->
+    <!-- Verificar autenticación y redirigir si no está autenticado -->
     <script>
-        // Cerrar sesión
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "login.html"; // Redirige al login después de cerrar sesión
-            }).catch((error) => {
-                console.error("Error al cerrar sesión: ", error);
-            });
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!firebase.auth().currentUser) {
+                window.location.href = "login.html"; // Si el usuario no está autenticado, redirige a login
+            }
+        });
     </script>
 
 </body>

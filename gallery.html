@@ -1,51 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería | Mi Galería</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" media="(max-width: 768px)" href="mobile.css">
+  <meta charset="UTF-8">
+  <title>Mi Galería</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header">
-        <button class="mobile-menu-btn" aria-label="Menú">☰</button>
-        <nav>
-            <ul>
-                <li><a href="index.html">🏠 Inicio</a></li>
-                <li><a href="gallery.html" class="active">🖼️ Galería</a></li>
-                <li><a href="upload.html">📤 Subir</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <a href="home.html">Inicio</a>
+      <a href="gallery.html" class="active">Galería</a>
+      <a href="upload.html">Subir foto</a>
+      <button onclick="logout()">Cerrar sesión</button>
+    </nav>
+  </header>
 
-    <main class="gallery-container">
-        <div class="gallery-controls">
-            <h1>Tu Galería</h1>
-            <div class="search-sort">
-                <input type="text" placeholder="🔍 Buscar fotos..." id="searchInput">
-                <select id="sortSelect">
-                    <option value="newest">Más recientes</option>
-                    <option value="oldest">Más antiguas</option>
-                </select>
+  <main class="gallery-main">
+    <h1>Mis Fotos</h1>
+    <div id="photoGrid" class="photo-grid">
+      <!-- Fotos se cargarán aquí -->
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+  <script src="firebase.js"></script>
+  
+  <script>
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) loadPhotos(user.uid);
+      else window.location.href = 'login.html';
+    });
+
+    async function loadPhotos(userId) {
+      const storageRef = firebase.storage().ref(`photos/${userId}`);
+      const grid = document.getElementById('photoGrid');
+      grid.innerHTML = '<p>Cargando fotos...</p>';
+
+      try {
+        const files = await storageRef.listAll();
+        if (files.items.length === 0) {
+          grid.innerHTML = '<p>No hay fotos aún. <a href="upload.html">Sube la primera</a></p>';
+          return;
+        }
+
+        grid.innerHTML = '';
+        files.items.forEach(async item => {
+          const url = await item.getDownloadURL();
+          grid.innerHTML += `
+            <div class="photo-card">
+              <img src="${url}" loading="lazy">
             </div>
-        </div>
+          `;
+        });
+      } catch (error) {
+        grid.innerHTML = `<p class="error">Error al cargar fotos: ${error.message}</p>`;
+      }
+    }
 
-        <div id="photoGallery" class="photo-grid">
-            <!-- Cargado dinámicamente -->
-            <div class="loading-spinner"></div>
-        </div>
-
-        <div class="pagination">
-            <button id="prevBtn" disabled>⬅️ Anterior</button>
-            <span id="pageInfo">Página 1</span>
-            <button id="nextBtn">Siguiente ➡️</button>
-        </div>
-    </main>
-
-    <script src="js/firebase.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/gallery.js"></script>
-    <script src="js/mobile.js"></script>
+    function logout() {
+      firebase.auth().signOut();
+    }
+  </script>
 </body>
 </html>

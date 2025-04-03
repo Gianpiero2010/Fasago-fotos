@@ -1,11 +1,42 @@
-<form id="registerForm">
-  <input type="email" id="email" readonly>
-  <input type="password" id="password" placeholder="Crea una contraseña" minlength="6" required>
-  <button type="submit">Registrarme</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <h1>Crear Cuenta</h1>
+      <form id="registerForm">
+        <input type="email" id="email" placeholder="Correo" required>
+        <input type="password" id="password" placeholder="Contraseña (mín 6 caracteres)" minlength="6" required>
+        <button type="submit">Registrarme</button>
+      </form>
+      <p class="auth-link">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+      <div id="registerError" class="error-message"></div>
+    </div>
+  </div>
 
-<script>
-  // Pre-llenar email desde URL
-  const urlParams = new URLSearchParams(window.location.search);
-  document.getElementById('email').value = urlParams.get('email') || '';
-</script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="firebase.js"></script>
+  
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        alert('¡Registro exitoso! Ahora inicia sesión');
+        window.location.href = 'login.html';
+      } catch (error) {
+        document.getElementById('registerError').textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>

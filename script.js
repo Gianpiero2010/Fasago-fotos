@@ -1,59 +1,89 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Verifica si el usuario está autenticado
-    if (!firebase.auth().currentUser) {
-        window.location.href = "login.html"; // Si no está autenticado, redirige a login
+document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("uploadForm")) {
+        document.getElementById("uploadForm").addEventListener("submit", savePhoto);
     }
-
-    // Cargar las fotos desde Firebase Storage
-    loadPhotos();
+    if (document.getElementById("feed")) {
+        loadPhotos();
+    }
 });
 
-// Función para cargar las fotos
+// Guardar foto en localStorage
+function savePhoto(event) {
+    event.preventDefault();
+
+    const fileInput = document.getElementById("fileInput");
+    const captionInput = document.getElementById("captionInput");
+
+    if (fileInput.files.length === 0) {
+        alert("Selecciona una imagen.");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const photoData = {
+            id: Date.now(),
+            image: event.target.result,
+            caption: captionInput.value
+        };
+
+        let photos = JSON.parse(localStorage.getItem("photos")) || [];
+        photos.push(photoData);
+        localStorage.setItem("photos", JSON.stringify(photos));
+
+        fileInput.value = "";
+        captionInput.value = "";
+
+        alert("Foto subida con éxito.");
+        loadPhotos(); // Recargar la galería después de subir la foto
+    };
+
+    reader.readAsDataURL(fileInput.files[0]);
+}
+
+// Cargar fotos en la galería
 function loadPhotos() {
-    const photoFeed = document.getElementById('photoFeed');
-    const user = firebase.auth().currentUser;
-    const storageRef = firebase.storage().ref();
-    const userPhotosRef = storageRef.child('photos/' + user.uid);
+    const feed = document.getElementById("feed");
+    feed.innerHTML = "";
 
-    userPhotosRef.listAll().then((res) => {
-        res.items.forEach((itemRef) => {
-            itemRef.getDownloadURL().then((url) => {
-                const photoDiv = document.createElement('div');
-                photoDiv.className = 'photo';
+    let photos = JSON.parse(localStorage.getItem("photos")) || [];
 
-                const img = document.createElement('img');
-                img.src = url;
-                photoDiv.appendChild(img);
+    photos.forEach(photo => {
+        const post = document.createElement("div");
+        post.className = "post";
 
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-btn';
-                deleteBtn.textContent = '❌';
-                deleteBtn.onclick = function() {
-                    deletePhoto(itemRef);
-                };
-                photoDiv.appendChild(deleteBtn);
+        const img = document.createElement("img");
+        img.src = photo.image;
 
-                const downloadBtn = document.createElement('a');
-                downloadBtn.className = 'download-btn';
-                downloadBtn.href = url;
-                downloadBtn.download = itemRef.name;
-                downloadBtn.textContent = '⬇️';
-                photoDiv.appendChild(downloadBtn);
+        const caption = document.createElement("p");
+        caption.textContent = photo.caption;
 
-                photoFeed.appendChild(photoDiv);
-            });
-        });
-    }).catch((error) => {
-        console.error("Error al cargar las fotos: ", error);
+        // Botón de eliminar
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "❌ Eliminar";
+        deleteBtn.onclick = function () {
+            deletePhoto(photo.id);
+        };
+
+        // Botón de descarga
+        const downloadBtn = document.createElement("a");
+        downloadBtn.textContent = "⬇️ Descargar";
+        downloadBtn.href = photo.image;
+        downloadBtn.download = `foto_${photo.id}.png`;
+        downloadBtn.className = "download-btn";
+
+        post.appendChild(img);
+        post.appendChild(caption);
+        post.appendChild(deleteBtn);
+        post.appendChild(downloadBtn);
+        feed.appendChild(post);
     });
 }
 
-// Función para eliminar una foto
-function deletePhoto(itemRef) {
-    itemRef.delete().then(() => {
-        alert('Foto eliminada con éxito');
-        loadPhotos(); // Recargar las fotos después de eliminar
-    }).catch((error) => {
-        console.error('Error al eliminar la foto: ', error);
-    });
+// Eliminar foto
+function deletePhoto(photoId) {
+    let photos = JSON.parse(localStorage.getItem("photos")) || [];
+    photos = photos.filter(photo => photo.id !== photoId);
+    localStorage.setItem("photos", JSON.stringify(photos));
+    loadPhotos();
 }

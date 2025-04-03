@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Fotos</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Carga de Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+    <title>Galería | Mi Galería</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" media="(max-width: 768px)" href="css/mobile.css">
 </head>
 <body>
-
-    <header>
+    <header class="main-header">
+        <button class="mobile-menu-btn" aria-label="Menú">☰</button>
         <nav>
             <ul>
-                <li><a href="home.html">Inicio</a></li>
-                <li><a href="upload.html">Subir Foto</a></li>
-                <li><a href="login.html" onclick="logout()">Cerrar Sesión</a></li>
+                <li><a href="index.html">🏠 Inicio</a></li>
+                <li><a href="gallery.html" class="active">🖼️ Galería</a></li>
+                <li><a href="upload.html">📤 Subir</a></li>
             </ul>
         </nav>
     </header>
 
-    <section id="gallery">
-        <h2>Galería de Fotos</h2>
-        <div id="photoFeed" class="photo-feed">
-            <!-- Aquí se cargarán las fotos -->
+    <main class="gallery-container">
+        <div class="gallery-controls">
+            <h1>Tu Galería</h1>
+            <div class="search-sort">
+                <input type="text" placeholder="🔍 Buscar fotos..." id="searchInput">
+                <select id="sortSelect">
+                    <option value="newest">Más recientes</option>
+                    <option value="oldest">Más antiguas</option>
+                </select>
+            </div>
         </div>
-    </section>
 
-    <script src="gallery.js"></script> <!-- El script para cargar las fotos -->
+        <div id="photoGallery" class="photo-grid">
+            <!-- Cargado dinámicamente -->
+            <div class="loading-spinner"></div>
+        </div>
 
-    <!-- Script de logout -->
-    <script>
-        // Cerrar sesión
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "login.html"; // Redirige al login después de cerrar sesión
-            }).catch((error) => {
-                console.error("Error al cerrar sesión: ", error);
-            });
-        }
-    </script>
+        <div class="pagination">
+            <button id="prevBtn" disabled>⬅️ Anterior</button>
+            <span id="pageInfo">Página 1</span>
+            <button id="nextBtn">Siguiente ➡️</button>
+        </div>
+    </main>
 
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/mobile.js"></script>
 </body>
 </html>

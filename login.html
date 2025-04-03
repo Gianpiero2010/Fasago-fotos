@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar Sesión</title>
+  <title>Iniciar Sesión | Fasago Fotos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,27 +20,23 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="firebase.js"></script>
-  
-  <script>
+  <!-- Importación de Firebase -->
+  <script type="module">
+    import { auth } from './firebase.js';
+    import { signInWithEmailAndPassword } from "firebase/auth";
+
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
+        await signInWithEmailAndPassword(auth, email, password);
         window.location.href = 'home.html';
       } catch (error) {
-        let message = error.message;
-        if (error.code === 'auth/user-not-found') {
-          message = 'Usuario no registrado. ¿Quieres crear una cuenta?';
-        }
-        document.getElementById('loginError').textContent = message;
-      }
-    });
-  </script>
-</body>
-</html>
+        const errorMsg = {
+          'auth/user-not-found': 'Usuario no registrado',
+          'auth/wrong-password': 'Contraseña incorrecta',
+          'auth/too-many-requests': 'Demasiados intentos. Intenta más tarde'
+        }[error.code] || error.message;
+        

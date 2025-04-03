@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
-
 <body>
 
     <header>
@@ -26,7 +27,16 @@
     </section>
 
     <script src="script.js"></script>
-    <script src="logout.js"></script> <!-- Script de cerrar sesión -->
+    <script src="logout.js"></script>
+
+    <!-- Verificar autenticación y redirigir si no está autenticado -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!firebase.auth().currentUser) {
+                window.location.href = "login.html"; // Si el usuario no está autenticado, redirige a login
+            }
+        });
+    </script>
 
 </body>
 </html>

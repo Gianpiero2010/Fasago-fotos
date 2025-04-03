@@ -5,17 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </head>
 <body>
 
     <section id="loginContainer">
         <h2>Iniciar Sesión</h2>
-        <input type="password" id="passwordInput" placeholder="Ingresa la contraseña" required>
-        <button onclick="checkPassword()">Entrar</button>
+        <button id="loginBtn">Iniciar sesión con Google</button>
         <p id="errorMsg"></p>
     </section>
 
     <script src="login.js"></script>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
+        };
+
+        // Inicializar Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (auth.currentUser) {
+                window.location.href = "home.html"; // Si el usuario está autenticado, redirigir a home
+            }
+        });
+
+        // Manejo de autenticación con Google
+        const loginBtn = document.getElementById("loginBtn");
+
+        loginBtn.addEventListener("click", function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("Usuario autenticado:", user);
+                    // Redirigir a la página principal después de iniciar sesión
+                    window.location.href = "home.html";
+                })
+                .catch((error) => {
+                    const errorMsg = document.getElementById("errorMsg");
+                    errorMsg.textContent = "Error en la autenticación: " + error.message;
+                    errorMsg.style.color = "red";
+                });
+        });
+    </script>
 
 </body>
 </html>

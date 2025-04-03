@@ -2,63 +2,62 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio | Galería de Fotos</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Inicio | Mi Galería</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" media="(max-width: 768px)" href="css/mobile.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4361ee">
 </head>
 <body>
+    <!-- Header Responsive -->
     <header class="main-header">
-        <nav aria-label="Navegación principal">
+        <button class="mobile-menu-btn" aria-label="Menú">☰</button>
+        <nav>
             <ul>
-                <li><a href="home.html" class="active">Inicio</a></li>
-                <li><a href="gallery.html">Galería</a></li>
-                <li><a href="upload.html">Subir Foto</a></li>
+                <li><a href="index.html" class="active">🏠 Inicio</a></li>
+                <li><a href="gallery.html">🖼️ Galería</a></li>
+                <li><a href="upload.html">📤 Subir</a></li>
+                <li><button id="logoutBtn" class="logout-btn">🚪 Salir</button></li>
             </ul>
         </nav>
-        <button id="logoutBtn" class="logout-btn">
-            <span class="icon">🚪</span> Cerrar Sesión
-        </button>
     </header>
 
     <main class="home-container">
-        <section class="welcome-section">
+        <!-- Sección Principal -->
+        <section class="hero">
             <h1>Bienvenido a tu Galería</h1>
             <p>Guarda y comparte tus mejores momentos</p>
+            <a href="upload.html" class="btn-primary">Subir primera foto</a>
         </section>
 
-        <section class="whats-new">
-            <h2>📢 ¿Qué hay de nuevo?</h2>
+        <!-- Novedades -->
+        <section class="updates">
+            <h2>✨ Novedades</h2>
             <div class="update-card">
-                <h3>Versión 2.1 - Actualización de Julio</h3>
-                <ul class="update-features">
-                    <li>✅ Nueva función de vista previa antes de subir fotos</li>
-                    <li>✅ Límite de tamaño aumentado a 5MB por imagen</li>
-                    <li>✅ Mejorado el sistema de notificaciones</li>
-                    <li>✅ Diseño más rápido y accesible</li>
+                <h3>Nueva Actualización v2.5</h3>
+                <ul>
+                    <li>📱 Soporte mejorado para móviles</li>
+                    <li>⚡ 30% más rápido</li>
+                    <li>🖼️ Nueva galería interactiva</li>
                 </ul>
-                <div class="update-meta">
-                    <span class="update-date">Publicado: 15/07/2023</span>
-                    <button class="view-details-btn">Ver detalles completos</button>
-                </div>
             </div>
         </section>
 
+        <!-- Fotos Recientes -->
         <section class="recent-photos">
-            <h2>Tus fotos recientes</h2>
+            <h2>Tus Fotos Recientes</h2>
             <div id="recentPhotos" class="photo-grid">
-                <!-- Fotos se cargarán aquí -->
+                <!-- Dinámico desde JS -->
                 <div class="loading-spinner"></div>
             </div>
-            <a href="gallery.html" class="view-all-btn">Ver todas las fotos</a>
         </section>
     </main>
 
-    <script src="firebase-config.js"></script>
-    <script src="home.js"></script>
-    <script src="auth.js"></script>
+    <!-- Scripts -->
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/mobile.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

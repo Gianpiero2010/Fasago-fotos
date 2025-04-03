@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Subir Foto</title>
+  <title>Subir Foto | Fasago Fotos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
     <h1>Subir Nueva Foto</h1>
     <form id="uploadForm">
       <div class="form-group">
-        <label for="photoUpload">Seleccionar imagen:</label>
+        <label for="photoUpload">Seleccionar imagen (max 5MB):</label>
         <input type="file" id="photoUpload" accept="image/*" required>
       </div>
       <div id="previewContainer" class="preview-container">
@@ -27,61 +27,3 @@
       </div>
       <button type="submit" id="uploadBtn">Subir Foto</button>
       <div id="uploadStatus" class="status-message"></div>
-    </form>
-  </main>
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
-  <script src="firebase.js"></script>
-  
-  <script>
-    // Vista previa de la imagen
-    document.getElementById('photoUpload').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          document.getElementById('imagePreview').src = event.target.result;
-          document.getElementById('previewContainer').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // Subir foto
-    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const file = document.getElementById('photoUpload').files[0];
-      const user = firebase.auth().currentUser;
-
-      if (!file || !user) return;
-
-      const uploadBtn = document.getElementById('uploadBtn');
-      uploadBtn.disabled = true;
-      uploadBtn.textContent = 'Subiendo...';
-
-      try {
-        const storageRef = firebase.storage().ref(`photos/${user.uid}/${Date.now()}_${file.name}`);
-        const uploadTask = await storageRef.put(file);
-        const downloadURL = await uploadTask.ref.getDownloadURL();
-        
-        document.getElementById('uploadStatus').textContent = '¡Foto subida con éxito!';
-        document.getElementById('uploadStatus').style.color = 'green';
-        document.getElementById('uploadForm').reset();
-        document.getElementById('previewContainer').style.display = 'none';
-      } catch (error) {
-        document.getElementById('uploadStatus').textContent = `Error: ${error.message}`;
-        document.getElementById('uploadStatus').style.color = 'red';
-      } finally {
-        uploadBtn.disabled = false;
-        uploadBtn.textContent = 'Subir Foto';
-      }
-    });
-
-    function logout() {
-      firebase.auth().signOut();
-    }
-  </script>
-</body>
-</html>

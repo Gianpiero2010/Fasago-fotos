@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Galería de Fotos</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Carga de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 </head>
 <body>
 
@@ -14,28 +16,31 @@
         <nav>
             <ul>
                 <li><a href="home.html">Inicio</a></li>
-                <li><a href="gallery.html">Galería</a></li>
                 <li><a href="upload.html">Subir Foto</a></li>
+                <li><a href="login.html" onclick="logout()">Cerrar Sesión</a></li>
             </ul>
         </nav>
-        <button onclick="logout()">Cerrar Sesión</button>
     </header>
 
-    <section id="home">
-        <h2>Bienvenido a nuestra galería familiar</h2>
-        <p>Comparte y guarda fotos familiares.</p>
+    <section id="gallery">
+        <h2>Galería de Fotos</h2>
+        <div id="photoFeed" class="photo-feed">
+            <!-- Aquí se cargarán las fotos -->
+        </div>
     </section>
 
-    <script src="script.js"></script>
-    <script src="logout.js"></script>
+    <script src="gallery.js"></script> <!-- El script para cargar las fotos -->
 
-    <!-- Verificar autenticación y redirigir si no está autenticado -->
+    <!-- Script de logout -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            if (!firebase.auth().currentUser) {
-                window.location.href = "login.html"; // Si el usuario no está autenticado, redirige a login
-            }
-        });
+        // Cerrar sesión
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "login.html"; // Redirige al login después de cerrar sesión
+            }).catch((error) => {
+                console.error("Error al cerrar sesión: ", error);
+            });
+        }
     </script>
 
 </body>

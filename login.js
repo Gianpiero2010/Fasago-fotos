@@ -1,18 +1,18 @@
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
+    apiKey: "TU_API_KEY", // Reemplaza con tu API Key
+    authDomain: "TU_AUTH_DOMAIN", // Reemplaza con tu dominio de autenticación
+    projectId: "TU_PROJECT_ID", // Reemplaza con tu ID de proyecto
+    storageBucket: "TU_STORAGE_BUCKET", // Reemplaza con tu bucket de almacenamiento
+    messagingSenderId: "TU_MESSAGING_SENDER_ID", // Reemplaza con tu ID de mensajería
+    appId: "TU_APP_ID" // Reemplaza con tu App ID
 };
 
 // Inicializar Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// Iniciar sesión con Google
+// Proveedor de Google
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // Función para autenticar con Google
@@ -46,5 +46,5 @@ function checkPassword() {
 
 // Ejecutar la función de login con Google cuando cargue el documento
 document.addEventListener("DOMContentLoaded", function () {
-    signInWithGoogle(); // Intenta iniciar sesión con Google cuando la página se carga
+    signInWithGoogle(); // Inicia sesión con Google automáticamente cuando la página carga
 });

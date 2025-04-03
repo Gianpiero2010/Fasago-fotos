@@ -1,0 +1,11 @@
+<form id="registerForm">
+  <input type="email" id="email" readonly>
+  <input type="password" id="password" placeholder="Crea una contraseña" minlength="6" required>
+  <button type="submit">Registrarme</button>
+</form>
+
+<script>
+  // Pre-llenar email desde URL
+  const urlParams = new URLSearchParams(window.location.search);
+  document.getElementById('email').value = urlParams.get('email') || '';
+</script>

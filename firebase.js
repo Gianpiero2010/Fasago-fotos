@@ -1,3 +1,4 @@
+// Configuración de Firebase (reemplaza con tus datos)
 const firebaseConfig = {
   apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
   authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
@@ -8,10 +9,4 @@ const firebaseConfig = {
 };
 
 // Inicializar Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
-
-// Exportar para otros archivos
-export { auth, db, storage };
+firebase.initializeApp(firebaseConfig);

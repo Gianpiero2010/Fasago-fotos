@@ -1,4 +1,4 @@
-// Configuración Firebase (usando tus datos)
+// Configuración Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
   authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
@@ -13,35 +13,78 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Función para manejar el logout (ahora es GLOBAL)
-function setupLogout() {
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+// --------------------- FUNCIÓN DE LOGIN CON PERSISTENCIA ---------------------
+async function handleLogin(email, password) {
+  try {
+    // Configurar persistencia LOCAL (recuerda la sesión)
+    await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    return userCredential.user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// --------------------- SETUP DE FORMULARIOS ---------------------
+function setupLoginForm() {
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      firebase.auth().signOut()
-        .then(() => {
-          window.location.href = "index.html";
-        })
-        .catch(error => {
-          console.error("Error al cerrar sesión:", error);
-        });
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        await handleLogin(email, password);
+        window.location.href = "home.html";
+      } catch (error) {
+        let errorMessage = error.message;
+        if (error.code === 'auth/user-not-found') {
+          errorMessage = "Usuario no registrado. Por favor regístrate.";
+        } else if (error.code === 'auth/wrong-password') {
+          errorMessage = "Contraseña incorrecta.";
+        }
+        document.getElementById('error').textContent = errorMessage;
+      }
     });
   }
 }
 
-// Ejecutar al cargar la página (para todas las páginas)
-document.addEventListener('DOMContentLoaded', setupLogout);
+// --------------------- MOSTRAR USUARIO ACTUAL ---------------------
+function displayUserInfo() {
+  const userEmailElement = document.getElementById('user-email');
+  const user = firebase.auth().currentUser;
 
-// También ejecutar si el DOM ya está cargado (por si acaso)
-if (document.readyState !== 'loading') {
-  setupLogout();
+  if (userEmailElement && user) {
+    userEmailElement.textContent = user.email;
+  }
 }
 
-// Protección de rutas (opcional, pero recomendado)
-const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
-if (protectedPages.some(page => window.location.pathname.includes(page))) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (!user) window.location.href = "index.html";
+// --------------------- VERIFICAR AUTENTICACIÓN ---------------------
+function checkAuthState() {
+  firebase.auth().onAuthStateChanged((user) => {
+    const currentPage = window.location.pathname.split('/').pop();
+    const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
+
+    if (protectedPages.includes(currentPage) {
+      if (!user) window.location.href = "index.html";
+    } else if (user && currentPage === 'index.html') {
+      window.location.href = "home.html"; // Redirige si ya está autenticado
+    }
+
+    if (user) displayUserInfo(); // Muestra el email si hay sesión
   });
 }
+
+// --------------------- INICIALIZAR ---------------------
+function initAuth() {
+  setupLoginForm();
+  setupRegisterForm(); // Añade esta función si tienes registro
+  setupLogout();
+  checkAuthState();
+}
+
+// Iniciar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', initAuth);
+if (document.readyState !== 'loading') initAuth();

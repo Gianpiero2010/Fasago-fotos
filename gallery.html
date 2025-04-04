@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mi Galería</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Galería | Mi Galería</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -11,57 +11,16 @@
       <a href="home.html">Inicio</a>
       <a href="gallery.html" class="active">Galería</a>
       <a href="upload.html">Subir foto</a>
-      <button onclick="logout()">Cerrar sesión</button>
+      <button id="logoutBtn">Cerrar sesión</button>
     </nav>
   </header>
 
-  <main class="gallery-main">
+  <main>
     <h1>Mis Fotos</h1>
     <div id="photoGrid" class="photo-grid">
       <!-- Fotos se cargarán aquí -->
     </div>
   </main>
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
-  <script src="firebase.js"></script>
-  
-  <script>
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) loadPhotos(user.uid);
-      else window.location.href = 'login.html';
-    });
-
-    async function loadPhotos(userId) {
-      const storageRef = firebase.storage().ref(`photos/${userId}`);
-      const grid = document.getElementById('photoGrid');
-      grid.innerHTML = '<p>Cargando fotos...</p>';
-
-      try {
-        const files = await storageRef.listAll();
-        if (files.items.length === 0) {
-          grid.innerHTML = '<p>No hay fotos aún. <a href="upload.html">Sube la primera</a></p>';
-          return;
-        }
-
-        grid.innerHTML = '';
-        files.items.forEach(async item => {
-          const url = await item.getDownloadURL();
-          grid.innerHTML += `
-            <div class="photo-card">
-              <img src="${url}" loading="lazy">
-            </div>
-          `;
-        });
-      } catch (error) {
-        grid.innerHTML = `<p class="error">Error al cargar fotos: ${error.message}</p>`;
-      }
-    }
-
-    function logout() {
-      firebase.auth().signOut();
-    }
-  </script>
+  <script src="gallery.js"></script>
 </body>
 </html>

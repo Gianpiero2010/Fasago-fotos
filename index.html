@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Mi Galería</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Firebase SDK v9 (COMPATIBLE) -->
+  
+  <!-- 🔥 Paso 1: Agrega estos SDKs de Firebase en el <head> -->
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
-  
-  <!-- Script de configuración Firebase -->
+
+  <!-- 🔥 Paso 2: Configuración de Firebase (coloca esto JUSTO después de los SDKs) -->
   <script>
-    // Configuración Firebase (TUS DATOS)
+    // Configuración con TUS DATOS
     const firebaseConfig = {
       apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
       authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
       projectId: "fasago-fotos-4a5fd",
-      storageBucket: "fasago-fotos-4a5fd.appspot.com",
+      storageBucket: "fasago-fotos-4a5fd.appspot.com",  // ¡Usa .appspot.com!
       messagingSenderId: "271898420621",
       appId: "1:271898420621:web:6010ea98a75b2ec257c9c4"
     };
@@ -25,6 +26,7 @@
     // Inicialización
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
+      console.log("Firebase inicializado correctamente"); // Para debug
     }
   </script>
 </head>
@@ -32,6 +34,7 @@
   <div class="auth-container">
     <div class="card">
       <h2>Iniciar Sesión</h2>
+      <!-- 🔥 El formulario se mantiene igual -->
       <form id="loginForm">
         <input type="email" id="email" placeholder="Correo" required>
         <input type="password" id="password" placeholder="Contraseña" required>
@@ -42,29 +45,37 @@
     </div>
   </div>
 
-  <!-- Script de autenticación -->
+  <!-- 🔥 Paso 3: Script de autenticación (al final del <body>) -->
   <script>
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    // Espera a que el DOM esté listo
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
       
-      try {
-        // Configurar persistencia de sesión
-        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-        
-        // Iniciar sesión
-        await firebase.auth().signInWithEmailAndPassword(email, password);
-        window.location.href = "home.html";
-      } catch (error) {
-        let message = error.message;
-        if (error.code === 'auth/user-not-found') {
-          message = "Usuario no registrado. Por favor regístrate.";
-        } else if (error.code === 'auth/wrong-password') {
-          message = "Contraseña incorrecta. Intenta nuevamente.";
-        }
-        document.getElementById('error').textContent = message;
-        console.error("Error de autenticación:", error);
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+
+          try {
+            // Configura persistencia LOCAL
+            await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+            
+            // Inicia sesión
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+            window.location.href = "home.html"; // Redirige al home
+          } catch (error) {
+            // Manejo de errores
+            let errorMessage = "Error al iniciar sesión. Intenta nuevamente.";
+            if (error.code === 'auth/user-not-found') {
+              errorMessage = "Usuario no registrado. Crea una cuenta primero.";
+            } else if (error.code === 'auth/wrong-password') {
+              errorMessage = "Contraseña incorrecta.";
+            }
+            document.getElementById('error').textContent = errorMessage;
+            console.error("Error detallado:", error); // Para debug
+          }
+        });
       }
     });
   </script>

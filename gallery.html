@@ -2,27 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Galería | Mi Galería</title>
+  <title>Mi Galería</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
 </head>
 <body>
   <header>
-    <nav>
-      <a href="home.html">Inicio</a>
-      <a href="gallery.html" class="active">Galería</a>
-      <a href="upload.html">Subir foto</a>
-<span id="user-email" style="margin-left: auto; margin-right: 1rem;"></span>
+    <h1>Galería de <span id="userTitle"></span></h1>
     <button id="logoutBtn">Cerrar sesión</button>
-    </nav>
   </header>
 
   <main>
-    <h1>Mis Fotos</h1>
-    <div id="photoGrid" class="photo-grid">
+    <div class="upload-section">
+      <input type="file" id="photoUpload" accept="image/*">
+      <button id="uploadBtn">Subir Foto</button>
+      <div id="uploadStatus"></div>
+    </div>
+
+    <div class="photo-grid" id="photoGrid">
       <!-- Fotos se cargarán aquí -->
     </div>
   </main>
+
   <script src="gallery.js"></script>
- <script src="auth.js"></script>
 </body>
 </html>

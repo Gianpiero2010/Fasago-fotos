@@ -1,67 +1,77 @@
-// Configuración Firebase
+// Configuración Firebase (TUS DATOS)
 const firebaseConfig = {
   apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
   authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
   projectId: "fasago-fotos-4a5fd",
   storageBucket: "fasago-fotos-4a5fd.firebasestorage.app",
   messagingSenderId: "271898420621",
-  appId: "1:271898420621:web:6010ea98a75b2ec257c9c4"
+  appId: "1:271898420621:web:6010ea98a75b2ec257c9c4",
+  measurementId: "G-K1SKTWWNGG"
 };
 
-// Inicialización
+// Inicialización Firebase
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Login
-if (document.getElementById('loginForm')) {
-  document.getElementById('loginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => window.location.href = "home.html")
-      .catch(error => {
-        let message = error.message;
-        if (error.code === 'auth/user-not-found') {
-          message = "Usuario no registrado. ¿Quieres crear una cuenta?";
-        }
-        document.getElementById('error').textContent = message;
-      });
-  });
+// Función para mostrar errores
+function showError(elementId, message) {
+  const errorElement = document.getElementById(elementId);
+  errorElement.textContent = message;
+  setTimeout(() => errorElement.textContent = '', 3000);
 }
 
-// Registro
-if (document.getElementById('registerForm')) {
-  document.getElementById('registerForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => {
+// Login
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        window.location.href = "home.html";
+      } catch (error) {
+        showError('error', error.message);
+      }
+    });
+  }
+
+  // Registro (para register.html)
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
         alert("¡Cuenta creada con éxito!");
         window.location.href = "index.html";
-      })
-      .catch(error => {
-        document.getElementById('error').textContent = error.message;
-      });
-  });
-}
+      } catch (error) {
+        showError('error', error.message);
+      }
+    });
+  }
 
-// Logout
-if (document.getElementById('logoutBtn')) {
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    firebase.auth().signOut()
-      .then(() => window.location.href = "index.html");
-  });
-}
+  // Logout (para home.html, gallery.html, upload.html)
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      firebase.auth().signOut()
+        .then(() => window.location.href = "index.html")
+        .catch(error => console.error("Error al cerrar sesión:", error));
+    });
+  }
 
-// Verificar autenticación en páginas protegidas
-const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
-if (protectedPages.some(page => window.location.pathname.includes(page))) {
-  firebase.auth().onAuthStateChanged(user => {
-    if (!user) window.location.href = "index.html";
-  });
-}
+  // Protección de rutas
+  const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
+  if (protectedPages.some(page => window.location.pathname.includes(page))) {
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) window.location.href = "index.html";
+    });
+  }
+});

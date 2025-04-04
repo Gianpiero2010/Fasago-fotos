@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Inicio</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Inicio | Mi Galería</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -11,31 +11,17 @@
       <a href="home.html" class="active">Inicio</a>
       <a href="gallery.html">Galería</a>
       <a href="upload.html">Subir foto</a>
-      <button onclick="logout()">Cerrar sesión</button>
+      <button id="logoutBtn">Cerrar sesión</button>
     </nav>
   </header>
 
-  <main class="home-main">
-    <h1>Últimas Actualizaciones</h1>
+  <main>
+    <h1>Bienvenido a tu Galería</h1>
     <div class="update-card">
-      <h3>Nueva función: Galería mejorada</h3>
-      <p>Ahora puedes ver tus fotos en un diseño de cuadrícula interactivo.</p>
-      <p class="update-date">Publicado: 03/04/2025</p>
+      <h3>Novedades Recientes</h3>
+      <p>¡Ahora puedes compartir tus fotos fácilmente!</p>
     </div>
   </main>
-
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="firebase.js"></script>
-  
-  <script>
-    firebase.auth().onAuthStateChanged(user => {
-      if (!user) window.location.href = 'login.html';
-    });
-
-    function logout() {
-      firebase.auth().signOut();
-    }
-  </script>
+  <script src="auth.js"></script>
 </body>
 </html>

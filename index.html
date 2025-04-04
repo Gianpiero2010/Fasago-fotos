@@ -8,6 +8,25 @@
   <!-- Firebase SDK v9 (COMPATIBLE) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+  
+  <!-- Script de configuración Firebase -->
+  <script>
+    // Configuración Firebase (TUS DATOS)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
+      authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
+      projectId: "fasago-fotos-4a5fd",
+      storageBucket: "fasago-fotos-4a5fd.appspot.com",
+      messagingSenderId: "271898420621",
+      appId: "1:271898420621:web:6010ea98a75b2ec257c9c4"
+    };
+
+    // Inicialización
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  </script>
 </head>
 <body>
   <div class="auth-container">
@@ -22,6 +41,32 @@
       <div id="error" class="error"></div>
     </div>
   </div>
-  <script src="auth.js"></script>
+
+  <!-- Script de autenticación -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        // Configurar persistencia de sesión
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        
+        // Iniciar sesión
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        window.location.href = "home.html";
+      } catch (error) {
+        let message = error.message;
+        if (error.code === 'auth/user-not-found') {
+          message = "Usuario no registrado. Por favor regístrate.";
+        } else if (error.code === 'auth/wrong-password') {
+          message = "Contraseña incorrecta. Intenta nuevamente.";
+        }
+        document.getElementById('error').textContent = message;
+        console.error("Error de autenticación:", error);
+      }
+    });
+  </script>
 </body>
 </html>

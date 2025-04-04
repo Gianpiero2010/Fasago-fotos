@@ -67,7 +67,7 @@ function checkAuthState() {
     const currentPage = window.location.pathname.split('/').pop();
     const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
 
-    if (protectedPages.includes(currentPage) {
+    if (protectedPages.includes(currentPage)) {
       if (!user) window.location.href = "index.html";
     } else if (user && currentPage === 'index.html') {
       window.location.href = "home.html"; // Redirige si ya está autenticado

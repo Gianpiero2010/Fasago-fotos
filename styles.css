@@ -143,3 +143,8 @@ button:hover {
     padding-top: env(safe-area-inset-top);
   }
 }
+#user-email {
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem;
+}

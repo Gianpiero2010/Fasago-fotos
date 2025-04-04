@@ -67,16 +67,16 @@ function checkAuthState() {
     const currentPage = window.location.pathname.split('/').pop();
     const protectedPages = ['home.html', 'gallery.html', 'upload.html'];
 
-    if (protectedPages.includes(currentPage)) {
+    // Condicional corregido (observa los paréntesis y llaves)
+    if (protectedPages.includes(currentPage)) {  // <-- Error aquí (paréntesis extra)
       if (!user) window.location.href = "index.html";
-    } else if (user && currentPage === 'index.html') {
-      window.location.href = "home.html"; // Redirige si ya está autenticado
+    } else if (user && currentPage === 'index.html') {  // <-- Este está CORRECTO
+      window.location.href = "home.html";
     }
 
-    if (user) displayUserInfo(); // Muestra el email si hay sesión
+    if (user) displayUserInfo();
   });
 }
-
 // --------------------- INICIALIZAR ---------------------
 function initAuth() {
   setupLoginForm();

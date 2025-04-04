@@ -2,90 +2,62 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <!-- Tu formulario de login -->
-   <!-- 🔥 Paso 1: Agrega estos SDKs de Firebase en el <head> -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
-
-  <!-- 🔥 Paso 2: Configuración de Firebase (coloca esto JUSTO después de los SDKs) -->
-  <script>
-    // Configuración con TUS DATOS
-    const firebaseConfig = {
-      apiKey: "AIzaSyCkNgikdUByZmfAIAMcvBiw5t9hKewtFPQ",
-      authDomain: "fasago-fotos-4a5fd.firebaseapp.com",
-      projectId: "fasago-fotos-4a5fd",
-      storageBucket: "fasago-fotos-4a5fd.appspot.com",  // ¡Usa .appspot.com!
-      messagingSenderId: "271898420621",
-      appId: "1:271898420621:web:6010ea98a75b2ec257c9c4"
-    };
-
-    // Inicialización
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-      console.log("Firebase inicializado correctamente"); // Para debug
+  <title>Galería Fotos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
     }
-  </script>
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="auth-container">
-    <div class="card">
-      <h2>Iniciar Sesión</h2>
-      <!-- 🔥 El formulario se mantiene igual -->
-      <form id="loginForm">
-        <input type="email" id="email" placeholder="Correo" required>
-        <input type="password" id="password" placeholder="Contraseña" required>
-        <button type="submit">Entrar</button>
-      </form>
-      <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
-      <div id="error" class="error"></div>
-    </div>
+  <div class="card">
+    <h2>Acceso Galería</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Tu nombre" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <div id="error" class="error"></div>
   </div>
 
-  <!-- 🔥 Paso 3: Script de autenticación (al final del <body>) -->
   <script>
-    // Espera a que el DOM esté listo
-    document.addEventListener('DOMContentLoaded', () => {
-      const loginForm = document.getElementById('loginForm');
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
       
-      if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-
-          try {
-            // Configura persistencia LOCAL
-            await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-            
-            // Inicia sesión
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-            window.location.href = "home.html"; // Redirige al home
-          } catch (error) {
-            // Manejo de errores
-            let errorMessage = "Error al iniciar sesión. Intenta nuevamente.";
-            if (error.code === 'auth/user-not-found') {
-              errorMessage = "Usuario no registrado. Crea una cuenta primero.";
-            } else if (error.code === 'auth/wrong-password') {
-              errorMessage = "Contraseña incorrecta.";
-            }
-            document.getElementById('error').textContent = errorMessage;
-            console.error("Error detallado:", error); // Para debug
-          }
-        });
+      if (password === 'fasago') {
+        // Guarda el nombre de usuario para usarlo después
+        localStorage.setItem('galleryUser', username);
+        window.location.href = 'gallery.html';
+      } else {
+        document.getElementById('error').textContent = 'Contraseña incorrecta (usa: fasago)';
       }
     });
   </script>
-  <!-- 1. Carga los SDKs de Firebase PRIMERO -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
-  
-  <!-- 2. Luego carga tu auth.js -->
-  <script src="auth.js"></script>
 </body>
 </html>

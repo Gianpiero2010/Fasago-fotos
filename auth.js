@@ -62,7 +62,7 @@ function displayUserInfo() {
 }
 
 // --------------------- VERIFICAR AUTENTICACIÓN ---------------------
-function checkAuthState() {
+function checkAuthState(){
   firebase.auth().onAuthStateChanged((user) => {
     const currentPage = window.location.pathname.split('/').pop();
     const protectedPages = ['home.html', 'gallery.html', 'upload.html'];

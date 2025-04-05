@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Galería</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-storage-compat.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Fotos</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Galería de <span id="userTitle"></span></h1>
-    <button id="logoutBtn">Cerrar sesión</button>
-  </header>
 
-  <main>
-    <div class="upload-section">
-      <input type="file" id="photoUpload" accept="image/*">
-      <button id="uploadBtn">Subir Foto</button>
-      <div id="uploadStatus"></div>
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Inicio</a></li>
+                <li><a href="gallery.html">Galería</a></li>
+                <li><a href="upload.html">Subir Foto</a></li>
+            </ul>
+        </nav>
+        <!-- Botón de cerrar sesión -->
+        <button onclick="logout()">Cerrar Sesión</button>
+    </header>
 
-    <div class="photo-grid" id="photoGrid">
-      <!-- Fotos se cargarán aquí -->
-    </div>
-  </main>
+    <section id="gallery">
+        <h2>Galería de Fotos</h2>
+        <div id="feed" class="feed">
+            <!-- Las fotos se cargarán aquí -->
+        </div>
+    </section>
 
-  <script src="gallery.js"></script>
+    <script src="script.js"></script> <!-- El script para manejar la galería -->
+    <script src="logout.js"></script> <!-- El script para manejar el cierre de sesión -->
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Estilo inspirado en la estética de ChatGPT */
+/* Estilo inspirado en la estética de ChatGPT mejorado */
 
 * {
     margin: 0;
@@ -11,6 +11,7 @@ body {
     background-color: #343541;
     color: #d1d5db;
     padding: 20px;
+    text-align: center;
 }
 
 header {
@@ -22,12 +23,16 @@ header {
     align-items: center;
     margin-bottom: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 header nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 header nav ul li a {
@@ -67,6 +72,10 @@ section {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 form input[type="file"],
@@ -98,9 +107,10 @@ form button:hover {
 
 #feed {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    justify-items: center;
 }
 
 .post {
@@ -109,17 +119,21 @@ form button:hover {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     padding: 15px;
     text-align: center;
+    width: 100%;
+    max-width: 250px;
 }
 
 .post img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     border-radius: 10px;
+    border: 2px solid #10a37f;
 }
 
 .post p {
     margin: 10px 0;
     color: #e5e7eb;
+    font-size: 0.95rem;
 }
 
 .post button,

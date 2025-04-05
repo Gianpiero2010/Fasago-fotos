@@ -1,96 +1,154 @@
+/* Estilo General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-color: #f5f5f5;
+    background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+    color: white;
+    text-align: center;
 }
 
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* Header y Navbar */
+header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 400px;
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    list-style: none;
+    padding: 10px;
 }
 
-select, input, button {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sección de Contenido */
+section {
+    margin: 30px auto;
+    max-width: 800px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+input, button {
+    width: 80%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+input {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+input::placeholder {
+    color: #ddd;
 }
 
 button {
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  cursor: pointer;
+    background: #ff4b2b;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
-  background-color: #3367d6;
+    background: #ff6b4b;
 }
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
+/* Galería */
+.feed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
 }
 
-.photo {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.post {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 10px;
+    width: 250px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
 }
 
-.error, #uploadStatus {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 4px;
+.post:hover {
+    transform: scale(1.05);
 }
 
-.error {
-  background-color: #ffebee;
-  color: #c62828;
+.post img {
+    width: 100%;
+    border-radius: 10px;
 }
 
-#uploadStatus {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-/* Efectos táctiles para móviles */
-@media (hover: none) {
-  button:active, a:active {
-    transform: scale(0.96);
-    opacity: 0.9;
-  }
+.post p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: white;
 }
 
-/* Ajustes para iOS */
-@supports (-webkit-touch-callout: none) {
-  body {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  header {
-    padding-top: env(safe-area-inset-top);
-  }
+/* Botón de Eliminar */
+.post button {
+    background: red;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
 }
-#user-email {
-  color: white;
-  font-weight: bold;
-  padding: 0.5rem;
+
+.post button:hover {
+    background: darkred;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+    section {
+        width: 90%;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input, button {
+        width: 100%;
+    }
 }

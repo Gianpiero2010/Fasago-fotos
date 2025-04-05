@@ -35,6 +35,7 @@ function savePhoto(event) {
         captionInput.value = "";
 
         alert("Foto subida con éxito.");
+        loadPhotos(); // Recargar la galería después de subir la foto
     };
 
     reader.readAsDataURL(fileInput.files[0]);
@@ -43,6 +44,7 @@ function savePhoto(event) {
 // Cargar fotos en la galería
 function loadPhotos() {
     const feed = document.getElementById("feed");
+    if (!feed) return;
     feed.innerHTML = "";
 
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
@@ -57,15 +59,24 @@ function loadPhotos() {
         const caption = document.createElement("p");
         caption.textContent = photo.caption;
 
+        // Botón de eliminar
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "❌ Eliminar";
         deleteBtn.onclick = function () {
             deletePhoto(photo.id);
         };
 
+        // Botón de descarga
+        const downloadBtn = document.createElement("a");
+        downloadBtn.textContent = "⬇️ Descargar";
+        downloadBtn.href = photo.image;
+        downloadBtn.download = `foto_${photo.id}.png`;
+        downloadBtn.className = "download-btn";
+
         post.appendChild(img);
         post.appendChild(caption);
         post.appendChild(deleteBtn);
+        post.appendChild(downloadBtn);
         feed.appendChild(post);
     });
 }

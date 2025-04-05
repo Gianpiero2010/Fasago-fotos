@@ -1,154 +1,120 @@
-/* Estilo General */
+/* Reset básico para eliminar márgenes y paddings predeterminados */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Estilos generales del body */
 body {
-    background: linear-gradient(to bottom right, #1e3c72, #2a5298);
-    color: white;
-    text-align: center;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
+  padding: 20px;
 }
 
-/* Header y Navbar */
-header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 10px 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+/* Encabezados */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  color: #444;
 }
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    list-style: none;
-    padding: 10px;
+h1 {
+  font-size: 2.5rem;
 }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 10px 15px;
-    transition: 0.3s;
-    border-radius: 5px;
+h2 {
+  font-size: 2rem;
 }
 
-nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.2);
+/* Enlaces */
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-/* Sección de Contenido */
-section {
-    margin: 30px auto;
-    max-width: 800px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+a:hover {
+  color: #2980b9;
 }
 
-/* Formulario */
-form {
-    display: flex;
+/* Botones */
+.button {
+  display: inline-block;
+  background: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background: #2980b9;
+}
+
+/* Contenedores */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Grid básico */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.col {
+  flex: 1;
+  padding: 0 15px;
+}
+
+/* Formularios */
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Navbar */
+.navbar {
+  background: #333;
+  color: white;
+  padding: 15px 0;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+}
+
+.navbar ul li {
+  margin-right: 20px;
+}
+
+.navbar ul li a {
+  color: white;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .navbar ul {
     flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-input, button {
-    width: 80%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-}
-
-input {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-input::placeholder {
-    color: #ddd;
-}
-
-button {
-    background: #ff4b2b;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #ff6b4b;
-}
-
-/* Galería */
-.feed {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-}
-
-.post {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 10px;
-    width: 250px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s;
-}
-
-.post:hover {
-    transform: scale(1.05);
-}
-
-.post img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.post p {
-    margin: 10px 0;
-    font-size: 1rem;
-    color: white;
-}
-
-/* Botón de Eliminar */
-.post button {
-    background: red;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.post button:hover {
-    background: darkred;
-}
-
-/* Responsivo */
-@media (max-width: 600px) {
-    section {
-        width: 90%;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    input, button {
-        width: 100%;
-    }
+  }
+  
+  .navbar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .col {
+    flex: 100%;
+    margin-bottom: 20px;
+  }
 }

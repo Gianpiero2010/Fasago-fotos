@@ -156,3 +156,57 @@ form button:hover {
     background-color: #0f8c6e;
     transform: scale(1.05);
 }
+/* Estilos para el formulario de subida */
+#uploadForm {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+#uploadForm input[type="file"] {
+  margin-bottom: 15px;
+}
+
+.preview-container {
+  display: none;
+  margin: 15px 0;
+  text-align: center;
+}
+
+#imagePreview {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 4px;
+}
+
+#uploadForm button {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#uploadForm button:disabled {
+  background: #cccccc;
+}
+
+.status {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.status.success {
+  background: #e6f7ee;
+  color: #2e7d32;
+}
+
+.status.error {
+  background: #ffebee;
+  color: #c62828;
+}
